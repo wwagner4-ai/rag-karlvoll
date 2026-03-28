@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse
 import uvicorn
 from pathlib import Path
+import splitpdf.llm as llm_
 
 context = {}
 app = FastAPI(title="Text Query API")
@@ -12,7 +13,7 @@ async def handle_query(
     text: str = Query(..., description="The text content to process", min_length=1),
 ):
     # print(f"query/text: '{text}'")
-    answer = f"Answer to: '{text}'"
+    answer = llm_.call_llm(text)
     return {
         "received_text": text,
         "answer": answer,
