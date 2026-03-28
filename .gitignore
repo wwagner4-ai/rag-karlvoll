@@ -1,4 +1,6 @@
 .DS_Store
 gitlfs
 splitpdf/.python-version
+*.egg-info
+__pycache__
 
