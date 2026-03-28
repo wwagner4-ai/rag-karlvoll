@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 4.0 Chat Client</title>
+    <script src="jquery.js"></script>
+    <style>
+        body { font-family: "Tahoma", sans-serif; display: flex; justify-content: center; padding: 10px; background: #aeaeae; }
+        .chat-container { width: 400px; background: rgb(128, 128, 128); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #chat-window { height: 500px; border: 1px solid #ddd; overflow-y: auto; margin-bottom: 15px; padding: 10px; background: #fafafa; }
+        .controls { display: flex; gap: 5px; }
+        input[type="text"] { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 8px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; }
+        #submit-btn { background-color: #007bff; }
+        #clear-btn { background-color: #6c757d; }
+        .message { margin-bottom: 8px; padding: 5px; border-bottom: 1px dashed #eee; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h2>Die alt-niederländische Malerei</h2>
+    <div id="chat-window">
+        </div>
+    <div class="controls">
+        <input type="text" id="message-input" placeholder="Frage eingeben...">
+        <button id="submit-btn">Senden</button>
+        <button id="clear-btn">Löschen</button>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    const $chatWindow = $('#chat-window');
+    const $input = $('#message-input');
+
+    // 1. Submit Button - Performs a GET request
+    $('#submit-btn').on('click', function() {
+        const msg = $input.val().trim();
+        
+        if (msg) {
+            $.get('http://localhost:{{port}}/query', { text: msg })
+                .done(function(data) {
+                    console.log(data)
+                    $chatWindow.append(`<div class="message"><strong>Du:</strong> ${msg}</div>`);
+                    $chatWindow.append(`<div class="message"><strong>KI:</strong> ${data.answer}</div>`);
+                    $input.val(msg); // Clear input
+                    $chatWindow.scrollTop($chatWindow[0].scrollHeight); // Auto-scroll
+                })
+                .fail(function() {
+                    alert("Fehler beim senden der Frage.");
+                });
+        }
+    });
+
+    // 2. Clear Button - Empties the chat window
+    $('#clear-btn').on('click', function() {
+        $chatWindow.empty();
+        $input.val('');
+    });
+
+    // Allow pressing "Enter" to submit
+    $input.on('keypress', function(e) {
+        if (e.which === 13) $('#submit-btn').click();
+    });
+});
+</script>
+
+</body>
+</html>
