@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 from typing import Optional
+import uvicorn
 
 app = FastAPI(title="Text Query API")
 
@@ -21,8 +22,5 @@ async def handle_query(
     }
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-    # Run the server: python main.py
+def start():
     uvicorn.run(app, host="0.0.0.0", port=8000)
