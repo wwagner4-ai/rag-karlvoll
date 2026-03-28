@@ -1,14 +1,12 @@
 import requests
-from pathlib import Path
 import json
 import splitpdf.helper as hlp_
 
 
 def to_text(clear_out_dir: bool):
 
-    data_dir = Path(__file__).parent.parent.parent.parent / "data"
-    pages_dir = data_dir / "pages"
-    texts_dir = data_dir / "texts"
+    pages_dir = hlp_.pages_dir()
+    texts_dir = hlp_.texts_dir()
     texts_dir.mkdir(exist_ok=True, parents=True)
     if clear_out_dir:
         hlp_.clear_dir(texts_dir)
