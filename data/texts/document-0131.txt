@@ -1,4 +1,4 @@
 {
-  "page_number": "131",
+  "page_number": 131,
   "text": "Der Meister scheint nach der etwas festeren, tonig nicht so reich nuancierten Farbenbehandlung und nach der stärkeren Betonung der Zeichnung ein Flame gewesen zu sein. So mag er denn als der nächste und erste gelten, der in Belgien, vermutlich in Löwen selbst, die Art des Holländers Dirk Bouts der heimischen Kunstauffassung angepasst hat. Von ihm aber geht die Entwicklung dann unmittelbar zu Memling hinüber, dem letzten Hauptmeister der Brügger Schule.  131"
 }

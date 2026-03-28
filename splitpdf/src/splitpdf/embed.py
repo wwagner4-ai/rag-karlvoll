@@ -36,7 +36,7 @@ def embed_pages(clear_database: bool):
                 Property(
                     name="page_number",
                     vectorize_property_name=True,
-                    data_type=DataType.TEXT,
+                    data_type=DataType.INT,
                 ),
             ],
         )

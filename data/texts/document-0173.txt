@@ -1,4 +1,4 @@
 {
-  "page_number": "173",
+  "page_number": 173,
   "text": "schon das Zierliche zu bilden wusste, wenn er auch nicht verlernt hat noch in monumentaler Massgabe zu arbeiten. Die Kunst fängt an lebendiger zu werden, sie geht aus der Kirche heraus und schafft in der Begegnung des David und der Abigail, in den Genrescenen des römischen Altars von Albert Ouwater bereits die Vorläufer eines pikanten genremässig erzählenden neuen Stils, dessen Hauptmeister der grösste Künstler der dritten Generation Hans Memling geworden ist.  173"
 }

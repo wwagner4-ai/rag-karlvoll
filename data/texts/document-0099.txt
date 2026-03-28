@@ -1,4 +1,4 @@
 {
-  "page_number": "99",
+  "page_number": 99,
   "text": "gilt von einer kleinen Madonna der Turiner Pinakothek, die Tschudi, mit sehr berechtigter Vorsicht, nur in die Nähe des Künstlers gerückt hat.  Auch mehrere Bildnisse werden dem Meister von Flemalle zugeschrieben; zwei in der Berliner Galerie, die unter sich ganz verschieden sind, aber auch mit dem Stile des Meisters selbst nichts zu tun haben. Das eine davon, das sich höchst markant vom hellen Grund abhebt, gehört wohl zu den interessantesten altniederländischen Porträts, die in der letzten Zeit bekannt wurden. Ferner hat die Sammlung W. Gumprecht in Berlin ein männliches Bildnis von etwas leeren Formen, das in den Kreis des Meisters gehört. Die Bildnisse eines Ehepaares in der Londoner Nationalgalerie weisen in ihrer weichlichen Eleganz bereits auf das Ende des Jahrhunderts hin. Sie sind in einer flüssigen Technik gemalt, die bei dem Meister nirgendwo nachzuweisen ist. Ebenso entsprechen das Arrangement der Gewänder und Falten, sowie der Gesichtsausdruck nicht mehr dem so früh anzusetzenden Stil des Meisters,  99"
 }

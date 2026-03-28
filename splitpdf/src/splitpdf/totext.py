@@ -1,6 +1,7 @@
 import requests
 import json
 import splitpdf.helper as hlp_
+from tqdm import tqdm
 
 
 def to_text(clear_out_dir: bool):
@@ -18,7 +19,8 @@ def to_text(clear_out_dir: bool):
     headers = {"Accept": "application/json", "X-Tika-OCRLanguage": "deu"}
 
     helper_page_nr = 1000
-    for image in list(pages_dir.iterdir()):
+    warnings = []
+    for image in tqdm(list(pages_dir.iterdir())):
         if image.suffix == ".jpg":
             try:
                 with image.open("rb") as f:
@@ -35,23 +37,27 @@ def to_text(clear_out_dir: bool):
                 # print(70*"- ")
                 extracted_page_nr = extract_page_number(text)
                 match extracted_page_nr:
-                    case str(errer_message):
-                        print("WARNING:", errer_message)
+                    case str(warning):
+                        warnings.append(warning)
                         page_nr = helper_page_nr
                         helper_page_nr += 1
                     case int(page_nr_):
                         page_nr = page_nr_
-                obj = {"page_number": f"{page_nr}", "text": text}
+                obj = {"page_number": page_nr, "text": text}
                 file_name = f"document-{page_nr:04d}.txt"
                 file_path = texts_dir / file_name
                 with file_path.open("w", encoding="utf-8") as f:
                     json.dump(obj, f, indent=2, ensure_ascii=False)
-                print(f"Wrote document {page_nr} {file_path}")
+                # print(f"Wrote document {page_nr} {file_path}")
 
             except FileNotFoundError:
                 print(f"Error: The file '{image}' was not found.")
             except requests.exceptions.RequestException as e:
                 print(f"An error occurred: {e}")
+    if warnings:
+        print("WARNINGS:")
+        for i, warning in enumerate(warnings):
+            print(i, warning)
 
 
 def extract_page_number(text: str) -> int | str:
