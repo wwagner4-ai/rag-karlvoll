@@ -40,13 +40,12 @@ $(document).ready(function() {
         const msg = $input.val().trim();
         
         if (msg) {
-            // Using jQuery.get() to simulate sending data to a server
-            // Here we use a placeholder API (JSONPlaceholder) for the demo
-            $.get('https://jsonplaceholder.typicode.com/posts/1', { message: msg })
+            $.get('http://localhost:{{port}}/query', { text: msg })
                 .done(function(data) {
-                    // On success, we "post" the message to our UI
+                    console.log(data)
                     $chatWindow.append(`<div class="message"><strong>You:</strong> ${msg}</div>`);
-                    $input.val(''); // Clear input
+                    $chatWindow.append(`<div class="message"><strong>RAG:</strong> ${data.answer}</div>`);
+                    $input.val(msg); // Clear input
                     $chatWindow.scrollTop($chatWindow[0].scrollHeight); // Auto-scroll
                 })
                 .fail(function() {
@@ -58,6 +57,7 @@ $(document).ready(function() {
     // 2. Clear Button - Empties the chat window
     $('#clear-btn').on('click', function() {
         $chatWindow.empty();
+        $input.val('');
     });
 
     // Allow pressing "Enter" to submit

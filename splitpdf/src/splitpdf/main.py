@@ -15,9 +15,10 @@ def to_images(clear_out_dir: bool = False):
 def to_texts(clear_out_dir: bool = False):
     tt_.to_text(clear_out_dir)
 
+
 @app.command(help="Starts the backend")
-def start_webapp():
-    wa_.start()
+def start_webapp(port: int = 8000):
+    wa_.start(port)
 
 
 if __name__ == "__main__":
