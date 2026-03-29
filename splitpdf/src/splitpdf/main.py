@@ -27,5 +27,10 @@ def embed(clear_db: bool = False):
     eb_.embed_pages(clear_db)
 
 
+@app.command(help="Query the vector database for matching documents")
+def query(prompt: str):
+    eb_.query(prompt)
+
+
 if __name__ == "__main__":
     app()
