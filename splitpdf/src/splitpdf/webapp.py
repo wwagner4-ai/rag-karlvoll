@@ -1,22 +1,40 @@
+from pathlib import Path
 from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse
 import uvicorn
-from pathlib import Path
-import splitpdf.llm as llm_
+from contextlib import asynccontextmanager
+
+import splitpdf.embed as embed_
+import splitpdf.helper as hlp_
+
+
+vector_database = embed_.VectorDatabase()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    print("Shutting down")
+    print("- Closing vector database")
+    vector_database.close()
+
 
 context = {}
-app = FastAPI(title="Text Query API")
+app = FastAPI(title="Text Query API", lifespan=lifespan)
 
 
 @app.get("/query")
 async def handle_query(
     text: str = Query(..., description="The text content to process", min_length=1),
 ):
-    # print(f"query/text: '{text}'")
-    answer = llm_.call_llm(text)
+    def to_docstring(index: int, doc: embed_.Document) -> str:
+        return f"{index:4d} {doc.page_number:4d} - {doc.text}"
+
+    documents = vector_database.query(hlp_.COLLECTION_NAME, text)
+    docs_text = "</br></br>".join([to_docstring(i, d) for i, d in enumerate(documents)])
     return {
         "received_text": text,
-        "answer": answer,
+        "answer": docs_text,
     }
 
 
