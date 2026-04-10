@@ -1,5 +1,9 @@
 from pathlib import Path
 import shutil
+import boto3 
+from s3path import S3Path 
+
+
 
 COLLECTION_NAME = "pages"
 
@@ -26,3 +30,5 @@ def pages_dir() -> Path:
 
 def texts_dir() -> Path:
     return data_dir() / "texts"
+
+

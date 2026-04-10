@@ -9,6 +9,7 @@ dependencies = [
     "pdf2image>=1.17.0",
     "python-dotenv>=1.2.2",
     "requests>=2.32.5",
+    "s3path>=0.6.5",
     "together>=2.7.0",
     "tqdm>=4.67.3",
     "typer>=0.23.2",
@@ -26,3 +27,4 @@ dev = [
 
 [project.scripts]
 splitpdf = "splitpdf.main:app"
+altnl = "splitpdf.main:app"

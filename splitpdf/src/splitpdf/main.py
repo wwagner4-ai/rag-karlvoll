@@ -3,6 +3,7 @@ import splitpdf.toimage as ti_
 import splitpdf.totext as tt_
 import splitpdf.webapp as wa_
 import splitpdf.embed as eb_
+import splitpdf.tryout as tryout_
 
 app = typer.Typer()
 
@@ -30,6 +31,11 @@ def embed(clear_db: bool = False):
 @app.command(help="Query the vector database for matching documents")
 def query(prompt: str):
     eb_.query(prompt)
+
+
+@app.command(help="Tryout something")
+def tryout():
+    tryout_.run()
 
 
 if __name__ == "__main__":

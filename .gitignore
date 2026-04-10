@@ -3,4 +3,5 @@ gitlfs
 splitpdf/.python-version
 *.egg-info
 __pycache__
+.env
 
