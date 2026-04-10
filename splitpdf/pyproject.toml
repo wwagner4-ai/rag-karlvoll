@@ -26,5 +26,4 @@ dev = [
 ]
 
 [project.scripts]
-splitpdf = "splitpdf.main:app"
 altnl = "splitpdf.main:app"

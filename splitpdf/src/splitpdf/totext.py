@@ -11,7 +11,7 @@ def to_text(clear_out_dir: bool):
     texts_dir.mkdir(exist_ok=True, parents=True)
     if clear_out_dir:
         hlp_.clear_dir(texts_dir)
-    assert not hlp_.is_empty_dir(texts_dir), f"{texts_dir} must be empty"
+    assert hlp_.is_empty_dir(texts_dir), f"{texts_dir} must be empty"
 
     # Url where tika (full) is running
     # 'docker run -d -p 127.0.0.1:9998:9998 apache/tika:latest-full'

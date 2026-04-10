@@ -25,12 +25,14 @@ class VectorDatabase:
         self, collection_name: str, documents: list, clear_collection
     ) -> None:
         collection = self._get_collection(collection_name, do_clear=clear_collection)
-        with collection.batch.fixed_size(batch_size=10, concurrent_requests=4) as batch:
+        with collection.batch.fixed_size(batch_size=1, concurrent_requests=1) as batch:
             cnt = 0
             for obj in documents:
+                print(f"---> embed obj {cnt} {obj['page_number']} {obj['text'][0:30]}")
                 if cnt > 0 and cnt % 10 == 0:
                     print(f"Added {cnt} of {len(documents)} documents")
                 batch.add_object(properties=obj)
+                print(f"<--- embed obj {cnt} {obj['page_number']} {obj['text'][0:30]}")
                 cnt += 1
 
     def query(self, collection_name: str, prompt: str) -> list[Document]:

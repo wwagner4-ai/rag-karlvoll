@@ -10,7 +10,7 @@ def toimage(clear_out_dir: bool):
         pages_dir.mkdir(exist_ok=True, parents=True)
         if clear_out_dir:
             hlp_.clear_dir(pages_dir)
-        assert not hlp_.is_empty_dir(pages_dir), f"{pages_dir} must be empty"
+        assert hlp_.is_empty_dir(pages_dir), f"{pages_dir} must be empty"
         work_dir = Path(tmp_dirname)
         work_dir.mkdir(exist_ok=True, parents=True)
         assert not list(work_dir.iterdir()), f"{work_dir} must be empty"
@@ -28,5 +28,5 @@ def toimage(clear_out_dir: bool):
             output_folder=work_dir,
         )
         for i, image in enumerate(work_dir.iterdir()):
-            image.rename(pages_dir / f"page-{i:04d}.jpg")
+            hlp_.copy_file(image, pages_dir / f"page-{i:04d}.jpg")
         print(f"Created {len(image_paths)} files from {pdf_path} in {pages_dir}")
