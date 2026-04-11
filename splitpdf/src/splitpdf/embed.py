@@ -25,14 +25,12 @@ class VectorDatabase:
         self, collection_name: str, documents: list, clear_collection
     ) -> None:
         collection = self._get_collection(collection_name, do_clear=clear_collection)
-        with collection.batch.fixed_size(batch_size=1, concurrent_requests=1) as batch:
+        with collection.batch.fixed_size(batch_size=10, concurrent_requests=4) as batch:
             cnt = 0
             for obj in documents:
-                print(f"---> embed obj {cnt} {obj['page_number']} {obj['text'][0:30]}")
                 if cnt > 0 and cnt % 10 == 0:
                     print(f"Added {cnt} of {len(documents)} documents")
                 batch.add_object(properties=obj)
-                print(f"<--- embed obj {cnt} {obj['page_number']} {obj['text'][0:30]}")
                 cnt += 1
 
     def query(self, collection_name: str, prompt: str) -> list[Document]:
@@ -76,6 +74,13 @@ class VectorDatabase:
             ],
         )
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        return False
+
     def _get_collection(self, name: str, do_clear: bool = False) -> Collection:
         client = self._get_client()
         if do_clear:
@@ -86,21 +91,6 @@ class VectorDatabase:
         return client.collections.use(name)
 
 
-def query(prompt: str) -> None:
-    database = VectorDatabase()
-    try:
-        collection_name = hlp_.COLLECTION_NAME
-        documents = database.query(collection_name, prompt)
-        if len(documents) == 0:
-            print(f"Found no documents in {collection_name} for '{prompt}'")
-        else:
-            print(f"Found the following documents in {collection_name} for '{prompt}'")
-            for i, doc in enumerate(documents):
-                print(f"{i:4d} {doc.page_number:4d} - '{doc.text[:150]}...'")
-    finally:
-        database.close()
-
-
 def embed_pages(clear_database: bool):
     texts = []
     files = list(hlp_.texts_dir().iterdir())
@@ -109,11 +99,8 @@ def embed_pages(clear_database: bool):
         text = json.loads(file.read_text())
         texts.append(text)
 
-    database = VectorDatabase()
-    try:
+    with VectorDatabase() as database:
         collection_name = hlp_.COLLECTION_NAME
         print(f"Start adding {len(texts)} documents to collection '{collection_name}'")
         database.add_documents(collection_name, texts, clear_database)
         print(f"Added {len(texts)} documents to collection '{collection_name}'")
-    finally:
-        database.close()
